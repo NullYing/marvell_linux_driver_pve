@@ -45,8 +45,9 @@ The driver in this release is compatible with ethernet adapters based on:
  - AQC-100,
  - AQC-107,
  - AQC-108,
- - AQC-111C,
- - AQC-112C,
+ - AQC-109,
+ - AQC-111,
+ - AQC-112,
  - AQC-113.
 
 
@@ -55,6 +56,12 @@ SFP+ Devices (for AQC-100 based adapters)
 
 This release was verified to work with passive Direct Attach Cables (DAC) and
 SFP+/LC Optical Transceiver.
+
+DASH Support with AQC-107
+-------------------------
+To Enable DASH support in RHEL 8.8, RHEL 9.1, RHEL 8.8, Rocky Linux 8.8, Rocky Linux 9.1, Rocky Linux 9.2, Ubuntu 22.04.02 LTS;
+user needs to update initramfs in order to integrate/update driver provided in OS distribution.
+
 
 Building and Installation
 =========================
@@ -154,7 +161,7 @@ Install the driver on Debian\Ubuntu using atlantic-x.y.z.deb
 You can use "dpkg -l | grep -i atlantic" to verify that the driver has been
 installed.
 
-Alternatively you can use atlantic-x.y.z.noarch.rpm
+Install the driver on RedHat/CentOS/Rocky Linux distributions using atlantic-x.y.z.noarch.rpm
 ------------------------------------------------------------
 1. Make sure you have all the packages required to build a standalone kernel
    module.

@@ -123,7 +123,7 @@ struct aq_vec_s *aq_vec_alloc(struct aq_nic_s *aq_nic, unsigned int idx,
 	cpumask_set_cpu(self->aq_ring_param.cpu,
 			&self->aq_ring_param.affinity_mask);
 
-	netif_napi_add(aq_nic_get_ndev(aq_nic), &self->napi,
+	aq_netif_napi_add(aq_nic_get_ndev(aq_nic), &self->napi,
 		       aq_vec_poll, AQ_CFG_NAPI_WEIGHT);
 
 err_exit:

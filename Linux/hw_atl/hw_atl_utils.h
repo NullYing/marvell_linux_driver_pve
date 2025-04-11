@@ -637,6 +637,11 @@ int hw_atl_write_fwsettings_dwords(struct aq_hw_s *self, u32 offset, u32 *p,
 
 int hw_atl_utils_fw_set_wol(struct aq_hw_s *self, bool wol_enabled, u8 *mac);
 
+/*
+ * RPC call to use for data passthrough between agent and firmware.
+ */
+int hw_atl_utils_fw_data_rpc_call(struct aq_hw_s *self, u32 *data, unsigned int rpc_size);
+
 int hw_atl_utils_fw_rpc_call(struct aq_hw_s *self, unsigned int rpc_size);
 
 int hw_atl_utils_fw_rpc_wait(struct aq_hw_s *self,

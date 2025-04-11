@@ -58,6 +58,7 @@ static const struct pci_device_id aq_pci_tbl[] = {
 
 	{ PCI_VDEVICE(AQUANTIA, AQ_DEVICE_ID_AQC113CS), },
 	{ PCI_VDEVICE(AQUANTIA, AQ_DEVICE_ID_AQC114CS), },
+	{ PCI_VDEVICE(AQUANTIA, AQ_DEVICE_ID_AQC114), },
 
 	{}
 };
@@ -98,6 +99,7 @@ static const struct aq_board_revision_s hw_atl_boards[] = {
 
 	{ AQ_DEVICE_ID_AQC113CS,	AQ_HWREV_ANY,	&hw_atl2_ops, &hw_atl2_caps_aqc113, },
 	{ AQ_DEVICE_ID_AQC114CS,	AQ_HWREV_ANY,	&hw_atl2_ops, &hw_atl2_caps_aqc113, },
+	{ AQ_DEVICE_ID_AQC114,		AQ_HWREV_ANY,	&hw_atl2_ops, &hw_atl2_caps_aqc113, },
 };
 
 MODULE_DEVICE_TABLE(pci, aq_pci_tbl);
@@ -291,6 +293,8 @@ static int aq_pci_probe(struct pci_dev *pdev,
 		err = -ENOMEM;
 		goto err_ioremap;
 	}
+	mutex_init(&self->aq_hw->rpc_lock);
+
 	self->aq_hw->aq_nic_cfg = aq_nic_get_cfg(self);
 	if (self->aq_hw->aq_nic_cfg->aq_hw_caps->priv_data_len) {
 		int len = self->aq_hw->aq_nic_cfg->aq_hw_caps->priv_data_len;
@@ -347,8 +351,10 @@ static int aq_pci_probe(struct pci_dev *pdev,
 	}
 
 	if (self->aq_hw_ops->hw_get_version)
-		netdev_info(ndev, "Hardware revision 0x%x\n",
-			    self->aq_hw_ops->hw_get_version(self->aq_hw));
+		netdev_info(ndev, "Hardware revision 0x%x\n", self->aq_hw_ops->hw_get_version(self->aq_hw));
+
+	self->fw_ver = aq_nic_get_fw_version(self);
+	netdev_info(ndev, "Firmware Version 0x%x\n", self->fw_ver);
 
 	numvecs = min((u8)AQ_CFG_VECS_DEF,
 		      aq_nic_get_cfg(self)->aq_hw_caps->msix_irqs);
@@ -403,7 +409,9 @@ static int aq_pci_probe(struct pci_dev *pdev,
 
 	nic_count++;
 
-	aq_dash_nl_init();
+	/* DASH netlink support on FW 4.x */
+	if((self->fw_ver >> 24) == ATL_FW_VER_4X)
+		aq_dash_nl_init();
 	return 0;
 
 err_register:
@@ -431,7 +439,9 @@ static void aq_pci_remove(struct pci_dev *pdev)
 {
 	struct aq_nic_s *self = pci_get_drvdata(pdev);
 
-	aq_dash_nl_exit();
+	/* DASH netlink support on FW 4.x */
+	if((self->fw_ver >> 24) == ATL_FW_VER_4X)
+		aq_dash_nl_exit();
 
 	if (self->aq_hw->aq_fw_ops->get_link_capabilities &&
 	    (self->aq_hw->aq_fw_ops->get_link_capabilities(self->aq_hw) &

@@ -134,6 +134,8 @@ struct aq_hw_rx_fltrs_s {
 	u8 fet_reserved_count;
 };
 
+#define ATL_FW_VER_4X	4
+
 struct aq_nic_s {
 	atomic_t flags;
 	u32 msg_enable;
@@ -180,6 +182,7 @@ struct aq_nic_s {
 	struct aq_hw_rx_fltrs_s aq_hw_rx_fltrs;
 	struct aq_rx_filter_l3l4 udp_filter;
 	u32 dump_flag;
+	u32 fw_ver;
 };
 
 static inline struct device *aq_nic_get_dev(struct aq_nic_s *self)

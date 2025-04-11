@@ -1,0 +1,757 @@
+Release/tag: v2.5.12
+Date: 11/04/2024
+================================
+* Support for upstream kernel 6.9 rc3.
+* Enable netlink only for DASH.
+
+Release/tag: v2.5.11
+Date: 20/03/2024
+================================
+* Support for AQC114.
+* Support for Linux Kernel 6.8.
+
+Release/tag: v2.5.10
+Date: 28/11/2023
+================================
+* Support for RHEL 9.3.
+
+Release/tag: v2.5.9
+Date: 28/11/2023
+================================
+* struct genl_family got back ported from 6.2.x to RHEL kernel 5.14.0.
+
+Release/tag: v2.5.8
+Date: 24/08/2023
+================================
+* DASH data size handling fixes for send and receive.
+* Synchronize DASH netlink and driver use of common area.
+
+Release/tag: v2.5.7
+Date: 24/08/2023
+================================
+* Fix driver build for RHEL 8.8, RHEL 9.1, RHEL 8.8, Rocky Linux 8.8, Rocky Linux 9.1, Rocky Linux 9.2, Ubuntu 22.04.02 LTS.
+  To Enable DASH support in RHEL 8.8, RHEL 9.1, RHEL 8.8, Rocky Linux 8.8, Rocky Linux 9.1, Rocky Linux 9.2, Ubuntu 22.04.02 LTS;
+  user needs to update initramfs in order to integrate/update driver provided in OS distribution.
+* Fix for out-of-bounds indexing on other entry points.
+
+Release/tag: v2.5.6
+Date: 17/04/2023
+================================
+* Fix driver build for RHEL 8.7
+* Fix for out-of-bounds indexing
+
+Release/tag: v2.5.5
+Date: 23/05/2022
+================================
+* Fix compatiblity error of mac address apis
+
+Release/tag: v2.5.4
+Date: 13/05/2022
+================================
+* Fix incompatible get/set coalesce apis error
+* Replaced pci_set_dma_* apis with dma_set_*
+* Fix compatibility error of 'struct kobj_type' members
+
+Release/tag: v2.5.3
+Date: 28/01/2022
+================================
+* Statistics counters fixes and naming improvements
+* DASH fixes
+* latest kernel api fixes
+
+Release/tag: v2.5.1
+Date: 23/08/2021
+================================
+* Changes to get dash FW events and multicast to user application
+* Atlantic: Add verbose logging support
+* Fix for TCP flow flag is not being set
+* Antigua: Readme update for flashless boot
+* Added validation for dash configuration data
+
+Release/tag: v2.5.0
+Date: 05/08/2021
+================================
+* Dash firmware Netlink driver API
+* Antigua flashless boot support
+
+Release/tag: v2.4.15
+Date: 01/07/2021
+================================
+* Linux makefile issue
+* Removed 1G Half Duplex
+* Sync up with upstream, no functional changes
+
+Release/tag: v2.4.14
+Date: 13/05/2021
+================================
+
+* Linux backport: from 5.11
+* AQC113 ethtool should report fw bundle version instead of MAC fw version
+* Linux: B0 suspicious differences in codebase
+* AQC113-B1 : 2.4.11.0 atlantic driver failed to load on Fedora 33 kernel
+* AQC113-B0: Need to remove half duplex mode support from atlantic
+
+Release/tag: v2.4.13
+Date: 08/03/2021
+================================
+* AQC113-B1 : PTP doesn't work with Antigua B1 adapter
+* RHEL build warning
+
+Release/tag: v2.4.12
+Date: 04/03/2021
+================================
+* AQC113-B0 : Seeing Call trace Invalid tc 0
+* atlantic driver: ethtool statistics counter are incrementing only
+  for the queue, it doesn't get increment for available over all counters
+
+
+Release/tag: v2.4.11
+Date: 4/12/2020
+================================
+* AQC107 GPIO_0 PPS alignment
+* AQC113 Bx : Rx data path doesn't work for 38th MACVLAN interface
+
+Release/tag: v2.4.10
+Date: 17/09/2020
+================================
+* Add support of Antigua B0 statistics
+* Can't test Sync1588 functionality
+* GPIO input event timestamping doesn't work on AQC107
+
+Release/tag: v2.4.9
+* Same as v2.4.10
+
+Release/tag: v2.4.8
+Date: 13/08/2020
+================================
+* Further Linux master sync up with net-next
+* Incorrect value of Rx and Tx packet counters
+* Filtering: changes on multicast handling
+
+Release/tag: v2.4.7
+Date: 24/07/2020
+================================
+* KUnit-based unit tests for min_rate functionality
+* New dev ids
+* Incorrect value of Rx and Tx packet counters
+* hardware timestamping issue
+* Action Resolver table corruption during link up
+* Garbage in gpio pin name
+* PTP is broken on A1
+* CLONE - Add support for 4.x FW to Atlantic linux driver
+* A2: Advertise NBase-T speeds
+
+Release/tag: v2.4.6
+Date: 30/06/2020
+================================
+* Accommodate A2 upstream review comments
+* Fix build issue(s) on SUSE Linux Enterprise Server 12 SP4
+* PTP statistics
+* Replace ENOTSUPP usage to EOPNOTSUPP
+* RHEL 8.2 driver build error
+* Sync up Linux master with net-next upstream
+* Fix and improve post-mortem reset analysis
+* CLONE - Incorrect temperature is displayed in hwmon
+* CLONE - Foxcon/Lenovo: Can't uninstall AQN108 NIC driver on Redhat8.1 OS
+* USI/Lenovo: Linux Driver Fails with RHEL 8.2
+* Implement support of Runtime PM
+* Update steps for manual uninstall in README.txt
+
+Release/tag: v2.4.5
+Date: 30/04/2020
+================================
+* wrong mac addr in offload for FW on Antigua (hotfix after 2.4.4)
+
+Release/tag: v2.4.4
+Date: 28/04/2020
+================================
+* Fix for ptp rings stats
+* Backport GPIO from OpenAvnu
+* Foxcon/Lenovo: Can't uninstall AQN108 NIC driver on Redhat8.1 OS
+* Typo in aq_ring_tx_clean
+* BUG: KASAN: stack-out-of-bounds in aq_ndo_setup_tc+0x2a9/0x330 [atlantic]
+* Run Flexera Code Insight
+* Backport macsec cleanup from upstream
+* rename "/lib/firmware/aquantia" to "/lib/firmware/mrvl"
+* Incorrect work of VLAN Filtering offload
+* Fix additional review comments from Linux-patches!72
+* A2 filters layout draft support
+* Linux-5.7.0 support
+* Rx path was broken after cleanup
+* Clean up A2 implementation for upstreaming
+* macTemperature is always zero
+* Filtering infrastructure
+* A2 should not apply phy access code
+* A2: QoS: Incorrect rx traffic spreading
+* Linux: add pci error handling callbacks
+* qos: investigate min_rate and joint min/max rate usage
+* A2: Linux code cleanup and upstream prep
+* A2:  PTP merge and cleanup
+
+Release/tag: v2.4.3
+Date: March 3, 2020
+================================
+* Driver crashes during link up after Wake by MP from S3 (suspend)
+* Unexpected message displayed after WOL options enabling
+* Segmentation fault while rmmod atlantic on Antigua 7x7
+* IPv6 ntuple filters do not work on CentOS7.7-64
+* Ntuple filters for udp6/tcp4/tcp6/sctp6 (src_port, dst_port) do not work
+* ethtool doesn't show statistics for all queues in case of multiple TCs
+* qos: mqprio: implement mqprio rate limiters
+* Implement cable diag on Antigua
+
+
+Release/tag: v2.4.2
+Date: 18/02/2020
+================================
+* WOL: Linux driver crashes when restoring from the Hibernate
+* dmesg warnings after enabling TC if number of vectors is non-standard
+* QoS: Spread RX traffic through TCs
+* static checker error: passing untrusted data to 'test_bit()'
+* Linux: update reset sequence
+* A1: Ntuple ipv4(dst)/+L4, ipv6(src, dst)/+L4 filters not work
+* Linux: add early packet break param
+* WOL does not work on Antigua
+* Build failure on build-upstream (ioremap_nocache has been removed)
+* Setup hith antigua card and linux drv does not go to hibernate
+* Linux macsec backport from FWD
+
+
+Release/tag: v2.4.1
+Date: 31/01/2020
+================================
+* Add half/full duplex support in driver interface
+* Fix build-4.19-32bit
+* net: aquantia: KASAN: use-after-free in aq_nic_xmit
+* Lenovo/Foxconn P520/P920 system hang when resume from S4
+* RX flow filter: IPv6 addresses does not works
+
+Release/tag: v2.4.0
+Date: 10/01/2020
+================================
+* merged A2 into A1
+* performance: pcie ext tags hook: module param `aq_enable_wa=8`
+
+Release/tag: v2.3.3
+Date: 09/01/2020
+================================
+* upstream 5.5 backsync
+* Add support for 4.x FW to Atlantic linux driver
+* QCOMM: gpio drift
+* AMD cstom driver that doesn't reset MIPS
+
+
+Release/tag: v2.3.2
+Date: 29/11/2019
+================================
+* Linux: udp gso and tcp lso were not functional on IPv6
+* RX traffic stops at all with Windows LKP with MTU 16k
+* Linux: backport ptp and misc from upstream
+
+Release/tag: v2.3.1.3-a2
+Date: 03/01/2020
+================================
+
+* Multiply TX Packet Scheduler Data registers by 16 to keep A1 values
+* new VID/DID
+* Corect FW version display
+* use speed as an input for itr moderation
+* Code styling/checkpatch
+
+Release/tag: v2.3.1
+Date: 16/10/2019
+================================
+* DMANetworkLoopback is not working
+* Linux: 32bit build support
+* Linux PTP: Invalid pDelay calculation with 2.3.0.0 linux driver
+* "ifconfig down" does not change link state
+* Cable Diagnostics
+
+Release/tag: v2.3.0
+Date: 06/09/2019
+================================
+* Can't build driver on some custom kernels
+* ethtool timeout while setting EEE settings
+* Incorrect configure Wake on Link with Wake on Magic Packet
+* Backport network loopback from FWD
+* Linux PTP upstream preparations
+* Backport media detect phy option from FWD driver
+* Linux driver 2.0.22 incorrect display Flow Control status
+
+Release/tag: v2.2.9
+Date: 26/08/2019
+================================
+* Move SNR caps as in FW
+* Incorrect value flow control in registers
+* PC does not go to hibernate state
+* Vlan Promisc mode is enabled when 15 vlans are configured
+* Unknown symbol crc_itu_t
+
+Release/tag: v2.2.8
+Date: 08/08/2019
+================================
+* Driver crashes while tries to raise link (on older kernels)
+
+Release/tag: v2.2.7
+Date: 02/08/2019
+================================
+* Eliminate warning about FW image file not found
+* Backport netnext 20/07/2019
+* Backport Wake on Phy Link support from FWD to generic driver
+* Cable Diagnostics
+* Linux: RDM cache clear bit should be toggled, not set
+* Issues with Makefile
+* WoL does not work on AQC100
+* Lro session with CSUM errors is not drop
+* RHEL: 1718716: atlantic desn't work at specific topo: bridge
+* backport aq_filters from upstream
+* Add external clock sync in linux driver/firmware
+* UDP GSO: preliminary evaluation
+
+Release/tag: v2.2.6
+Date: 29/05/2019
+================================
+* WoL dosnt config
+* PHY access doesn't work at all
+* Linux driver stuck on linkup
+* Provide more info for debugging purposes
+* macvlan interface gets broken if MULTICAST flag is cleared on the base interface
+
+Release/tag: v2.2.5
+Date: 19/04/2019
+================================
+* Ring gets stuck, ifconfig down hangs the system
+* DMA dropped counter is invalid
+* Incorrect CHIPID for Bermuda NIC
+* Downshift is to be suported
+
+Release/tag: v2.2.4
+Date: 04/04/2019
+================================
+* Vlan promisc mode is turning on with first vlan and not turning on without vlans
+* Linux: backsync with upstream
+* RX traffic stops at all with Windows LKP
+* Linux: tx clean budget has logic error
+* Linux: warnings with gcc 7.3.0
+* Handle HW crash in the driver properly
+* Implement hostboot
+* Backport changes from upstream
+
+Release/tag: v2.2.3
+Date: 26/02/2019
+================================
+* LRO with FCS error hangs the ring
+* rx checksum offload for LRO pass invalid packets
+* LRO is broken
+* RX chksum offload not working in RedHat
+* CLONE - Wrong device ids are present in atl_main.c
+* Linux: aqc111c random disconnect - explicitly disable PTP on bermuda
+* Linux: EEE link modes and LPI timer not reported
+* Link capabilities are taken from statistics memory area
+
+Release/tag: v2.2.2
+Date: 28/01/2019
+================================
+* CentOS 7.6.1810 Driver build failture
+* RX stuck after ifconfig down up
+* Fix no tx isr on PTP
+
+Release: 2.2.1
+Date: 15/01/2019
+tag: v2.2.1
+================================
+* Linux: fix rx checksum offload for UDP/TCP over IPv6
+* Add tracepoints for RX, TX descriptors and RX skb
+
+Release: 2.2.0
+Date: 20/12/2018
+tag: v2.2.0
+================================
+* Merge with 2.0.19 - 2.0.22
+* PTP Support
+* Fix too early turning vlan promisc mode
+
+Release: 2.1.2
+Date: 20/10/2018
+tag: v2.1.2
+================================
+* Linux: fix vlan offload cfi bit
+* UDP RSS should be enabled by default
+* Linux: Bad iperf performance on AMD Ryzen setup  (LRO Settings)
+* Implement VLAN offload in Linux driver
+
+Release: 2.0.22
+Date: 19/12/2018
+tag: v2.0.22
+================================
+* Linux: improve skb construction
+* MR !125: RHEL8 build fixed
+* MR !92: fixed code style using checkpatch
+
+Release: 2.0.21
+Date: 27/11/2018
+tag: v2.0.21
+================================
+* Loopbacks can't be enabled from link down state
+* rx checksum offload is not working
+
+Release: 2.0.20
+Date: 17/10/2018
+tag: v2.0.20
+================================
+* Suspect TCP/UDP checksum offload always says "good"
+* RX stuck with enabled fast start
+* problem with macvlan
+* UDP RSS should be enabled by default
+
+Release: 2.0.19
+Date: 15/09/2018
+tag: v2.0.19
+================================
+* Bad RSS behaviour on Large fragmented UDP packets
+* Need to disable flow control in MAC when it is disabled by the driver
+
+Release: 2.1.1
+Date: 11/09/2018
+tag: v2.1.1
+================================
+* Merge with 2.0.12 - 2.0.18
+* RX flow filters should be implemented and supported
+* Implement ethtool rxfh (rss) configuration
+* RX flow filters: VLAN
+* Linux 2.1.x: Fixes statistics output and calculation
+* Linux: rxflow: Complete rxflow implementation with ethtypes and priorities
+* Linux: Prepare v2.1.1 release
+* Linux: Fix old kernel builds
+* Implement ethtool identify command
+
+Release: 2.0.18
+Date: 06/09/2018
+tag: v2.0.18
+================================
+* Linux: Fix old kernel builds
+* SMMU fault after device unbind
+
+Release: 2.0.17
+Date: 03/08/2018
+tag: v2.0.17
+================================
+* Multicast packets never get filtered on linux
+* Fix bugs that found smatch
+* upstream: syncup 08/2018
+
+Release: 2.0.16
+Date: 27/07/2018
+tag: v2.0.16
+================================
+* Reduce link-up time to 1sec for SE FW
+  - Link interrupt handling now allows faster link event detection
+  - Special mode for fast init sequence.
+    Disabled by default, enable with AQ_CFG_FAST_START in aq_cfg.h
+* Minor codestyle fixes
+
+Release: 2.0.15
+Date: 29/06/2018
+tag: v2.0.15
+================================
+* Add Phy Int/Ext loopbacks to ethtool.
+  NOTICE:
+  - All loopback modes should be enabled only when interface is UP.
+  - DMANetworkLoopback mode may not function as expected.
+
+Release: 2.0.14
+Date: 27/06/2018
+tag: v2.0.14
+================================
+* KVM/macvlan bridge was not functional
+* Add loopback to ethtool.
+  README with priv-flags sections.
+  Only System level loopback is functional for now.
+
+Release: 2.0.12
+Date: 29/05/2018
+tag: v2.0.12
+================================
+* Configure WOL to enable magic by default
+* netdev 4.17 styling syncup
+
+Release: 2.1.0
+Date: 21/05/2018
+tag: v2.1.0
+================================
+* PTP functionality merged in
+
+Release: 2.0.11
+Date: 18/05/2018
+tag: v2.0.11
+================================
+* cable len and chip temperature are now implemented via hwmon (sensors API)
+* Performance: Reset page offset when found that full page reuse is possible
+
+Release: 2.0.10.0
+Date: 03/05/2018
+tag: v2.0.10
+================================
+* Kernel 2.x support (experimental)
+* Linux DKMS packaging
+* ethtool negotiate restart should be implemented
+* ethtool ring size dynamic change
+* EEE settings are lost after link down/up
+* Linux driver must support WOL from shutdown
+* WoL works in wrong way with FW3.x DW
+* Pause frame (flow control) configuration should be done via ethtool
+* Declare vlan_features bits:
+  http://gitlab.rdc.aquantia.com/drv/Linux/merge_requests/62
+* Leftover bugfixes (msi isr)
+  http://gitlab.rdc.aquantia.com/drv/Linux/merge_requests/61
+
+Release: 2.0.9.0
+Date: 18/04/2018
+tag: v2.0.9
+================================
+* Fix RHEL7.5 incompatibility
+
+Release: 2.0.8.0
+Date: 11/04/2018
+tag: v2.0.8
+================================
+* ASUS XG-C100C 10G Network Adapter no longer working since 4.16
+  FW 1.5.44 and reset sequence collision
+  
+Release: 2.0.7.0
+Date: 05/04/2018
+tag: v2.0.7
+================================
+* Need to make EEE feature configurable with ethtool
+* net: aquantia: take care when shutdown on already stopped device
+* Disable Dirty Wake on shutdown and suspend
+* (misc) netdev comments 4.16 rc6
+* readme updates on installation
+
+Release: 2.0.6.0
+Date: 15/03/2018
+tag: v2.0.6
+================================
+* Post fix (R.Volkov found)
+* Shutdown pci callback closes the link (Synology NAS issues)
+* Introduce rx refill threshold parameter: aq_rx_refill_thres
+
+Release: 2.0.5.0
+Date: 06/03/2018
+tag: v2.0.5
+================================
+* B1 hardware never indicates mailbox ready
+* Flow control must be enabled by deffault
+* Linux driver must set link_drop bit when interface is down
+* Buffer flip&reuse implementation
+  http://gitlab.rdc.aquantia.com/drv/Linux/merge_requests/41
+
+Release: 2.0.4.0
+Date: 16/02/2018
+tag: v2.0.4
+================================
+* Indication of the WOL state does not work correctly
+* WOL in 2.0.3.0 Linux driver dosn't work with B0 cards
+* No traffic on FW 1.5.58 with 2x Linux driver
+* Wrong MTU size checks (< Min or > Max) are now working again on linuxes < 4.10
+* Fix compilation on linux 3.16
+* Reset sequence fix: RBL secure chip reset sequence have to reset SPI
+* allow Live MAC change
+* napi_alloc_skb improves performance on high packet rates
+
+Release: 2.0.3.0
+Date: 29/01/2018
+tag: v2.0.3
+================================
+* netdev syncup
+* WOL feature (magic packet only)
+* Cable length and temp diagnostics data in sysfs
+* Errors are appear during uninstalation linux driver
+
+Upstream Release: 2.0.2.1-kern
+kernel: 4.16
+================================
+* version bump
+* Implement pci shutdown callback
+* Allow live mac address changes
+* Add aq_tx_clean_budget and valid budget handling logic
+* Change inefficient wait loop on fw data reads
+* Fix a regression with reset on old firmware
+* Fix hardware reset when SPI may rarely hangup
+
+Release 2.0.2.0
+Upstream: 2.0.2-kern
+tag: v2.0.2
+25/01/2018 f/w 1.x, 2.9.x, 3.x or above
+================================
+* netdev syncup: Do not reset curr_stats on each up/down
+* netdev syncup: typo Octects
+* Wrong AQC100 IDs and link speeds reported
+
+Release 2.0.1.0
+tag: v2.0.1
+30/11/2017 f/w 1.x, 2.9.x, 3.x or above
+================================
+* Statistics mistakes and errors
+* PCI errors and NMI
+
+Release 2.0.0.0
+tag: v2.0.0
+17/11/2017 f/w 1.x, 2.9.x, 3.x or above
+================================
++ Reset sequence implemented
+* MAC address readout fixed
+
+Release 2.0.0.0-alpha2
+tag: v2.0.0-alpha2
+11/11/2017 f/w 3.0.3 or above
+================================
+* kernel 3.x build fixed
+
+Release 2.0.0.0-alpha1
+tag: v2.0.0-alpha1
+10/11/2017 f/w 3.0.3 or above
+================================
++ Initial support for both 1.x, 2.x and 3.x FW
+* 64bit wide statistics in ethtool
+! Full reset sequence is not yet implemented
+! Link status is polled, no isr usage yet
+
+
+
+Release 1.6.12.0 master 10_09-2017 f/w 1.5.14 or above
+=============
++QNAP requesting ethtool -c option (#2053)
+*Statistics never gets zeroed upon interface down/up (#2015)
+*Non optimal Interrupt Moderation Rates default settings makes udp very slow (#2041)
+
+Release 1.6.11.0 master 09_25-2017 f/w 1.5.14 or above
+=============
+*Link state is up right after link up command execution for 2 seconds then link goes down (#2033)
+*Netnext mainline syncup
+
+Release 1.6.10.0 master 09_20-2017 f/w 1.5.14 or above
+=============
+*Invalid queue state management causes Tx/Rx to die (#1941)
+*kernel mainline driver does not support jumbo frames (#1985)
+
+Release 1.6.9.0 rel-dev-1.6.9 08_11-2017 f/w 1.5.14 or above
+=============
+*MSM counters are not reset after driver is unloaded/loaded. (#1619).
+*Kernel panic/memory corruption on multicast > 32 (#1864).
+*Incorrect Interrupt moderation values assignment in linux driver (#1918).
+*Fix for enabling incorrect interrupt vectors count on Puma 7 Intel SoC (with Linux Kernel 3.10).
+*Removed unuseful spinlocks from datapath.
+*Minor fixes.
+
+Release 1.6.8.0 rel-dev 07_05-2017 f/w 1.5.14 or above
+=============
+*Fix for RX datapath initialization.
+*Minor fixes.
+
+Release 1.6.7.0 rel-dev 05_05-2017 f/w 1.5.14 or above
+=============
+*Synced with linux sources tree.
+*Support for GRO
+*Fixed Ethtool -S crash
+*Support for kernels >= 3.10
+*Minor fixes.
+
+Release 1.6.2.0 rel-kernel-arm 03_16-2017 f/w 1.5.14 or above
+=============
+*Synced with linux sources tree.
+*Fixed checksumm offloads for IPv6.
+*Added support for ARM.
+*Support for kernels 4.4, 4.8, 4.9
+*Minor fixes.
+
+Release 1.5.345.0 rel-kernel-b0-v3 01_19-2017 f/w 1.5.14 or above
+=============
+*Linux upstream fixes
+*Add fw version checking
+*Fix pm-resume crash.
+
+Release 1.5.335.0 rel-kernel-b0-v3 01_09-2017 f/w 1.5.14 or above
+=============
+*Linux upstream fixes
+
+Release 1.5.324.0 dev-pb-b0-cln-2 12_17-2016 f/w 1.5.14 or above
+=============
+*hibernate fix
+*Minor fixes and code cleanup
+
+Release 1.5.300.0 dev-pb-b0-cln 12_06-2016 f/w 1.5.14 or above
+=============
+*d109 pid support
+*Minor fixes and code cleanup
+
+
+Release 1.5.248.3 dev-pb-b0-clean 11-30-2016 f/w 1.5.14 or above
+=============
+* fix change link speed while NIC down.
+
+Release 1.5.247.3 dev-pb-b0-clean 11-30-2016 f/w 1.5.14 or above
+=============
+* fix netif status
+
+Release 1.5.246.3 dev-pb-b0-clean 11-29-2016 f/w 1.5.14 or above
+=============
++AQC100 PID support
+*Updated TX/RX throttling params
+*Minor fixes and code cleanup
+
+Release 1.5.245.3 dev-pb-b0-clean 11-23-2016 f/w 1.5.14 or above
+=============
++CSO error workaround (Bug #701)
++ifconfig filter support (promisc/multicast/broadcast/allmulti)
++Minor fixes and code cleanup
+
+
+Release 1.5.243.3 dev-pb-b0-clean 11-16-2016 f/w 1.5.14 or above
+============
++improved ethtool statistics
+
+Release 1.5.239.3 dev-pb-b0-clean 11-11-2016 f/w 1.5.14 or above
+============
++NAPI compliance fix
++Hot unplug fix
++Minor fixes and code cleanup
+
+
+
+Release 1.5.210.3 dev-pb-b0-clean 11-03-2016 f/w 1.5.14 or above
+============
++Fixed Jumbo frames.
++RSS fixes (new hash key, print RSS settings via ethtool)
++Minor fixes and code cleanup
+
+Release 1.5.203.3 dev-pb-b0-clean 10-31-2016 f/w 1.5.14 or above
+=============
++Support SuseServer 12.1
++Fixed kernel panic on CentOS 7.
+
+
+Release 1.5.201.3 dev-pb-b0-clean 10-29-2016 f/w 1.5.14 or above
+=============
++Support Centos
++Minor fixes and code cleanup
+
+Release 1.5.200.3 dev-pb-b0-clean 10-29-2016 f/w 1.5.10 or above
+=============
++Support new VID/PID.
++Fixed and tested the driver for B0 on FPGA.
++Support LRO for B0 on FPGA.
++Fixed link status detect.
+
+Known issues:
+- Build failed on Centos
+
+
+Release 1.5.100.3 10-22-2016 f/w 1.4 or above
+=============
++ Ethtool statistics
+* Debian 6 kernel build
+* A0/B0 support
+
+Know issues:
+- Link status hardcoded always '1G connected'

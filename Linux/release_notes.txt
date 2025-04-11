@@ -1,3 +1,39 @@
+Release/tag: v2.5.12
+Date: 11/04/2024
+================================
+* Support for upstream kernel 6.9 rc3.
+* Enable netlink only for DASH.
+
+Release/tag: v2.5.11
+Date: 20/03/2024
+================================
+* Support for AQC114.
+* Support for Linux Kernel 6.8.
+
+Release/tag: v2.5.10
+Date: 28/11/2023
+================================
+* Support for RHEL 9.3.
+
+Release/tag: v2.5.9
+Date: 28/11/2023
+================================
+* struct genl_family got back ported from 6.2.x to RHEL kernel 5.14.0.
+
+Release/tag: v2.5.8
+Date: 24/08/2023
+================================
+* DASH data size handling fixes for send and receive.
+* Synchronize DASH netlink and driver use of common area.
+
+Release/tag: v2.5.7
+Date: 24/08/2023
+================================
+* Fix driver build for RHEL 8.8, RHEL 9.1, RHEL 8.8, Rocky Linux 8.8, Rocky Linux 9.1, Rocky Linux 9.2, Ubuntu 22.04.02 LTS.
+  To Enable DASH support in RHEL 8.8, RHEL 9.1, RHEL 8.8, Rocky Linux 8.8, Rocky Linux 9.1, Rocky Linux 9.2, Ubuntu 22.04.02 LTS;
+  user needs to update initramfs in order to integrate/update driver provided in OS distribution.
+* Fix for out-of-bounds indexing on other entry points.
+
 Release/tag: v2.5.6
 Date: 17/04/2023
 ================================

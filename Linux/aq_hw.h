@@ -262,6 +262,7 @@ struct aq_hw_s {
 	u32 settings_addr;
 	u32 rpc_tid;
 	struct hw_atl_utils_fw_rpc rpc;
+	struct mutex rpc_lock;
 	s64 ptp_clk_offset;
 	s8 clk_select;
 	u16 phy_id;

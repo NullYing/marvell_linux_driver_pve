@@ -81,8 +81,13 @@ static inline struct sk_buff *napi_alloc_skb(struct napi_struct *napi,
 }
 #endif
 
-#if (LINUX_VERSION_CODE > KERNEL_VERSION(6, 2, 6))
-#define netif_napi_add(dev, napi, poll, weight) netif_napi_add(dev, napi, poll)
+
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(6, 0, 19)) || \
+	(RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(9, 1)) || \
+	(RHEL_RELEASE_CODE == RHEL_RELEASE_VERSION(8, 8))
+#define aq_netif_napi_add(dev, napi, poll, weight) netif_napi_add(dev, napi, poll)
+#else
+#define aq_netif_napi_add(dev, napi, poll, weight) netif_napi_add(dev, napi, poll, weight)
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 11, 0)
@@ -292,8 +297,7 @@ u16 crc_itu_t(u16 crc, const u8 *buffer, size_t len);
 #define BIT_ULL(nr)		(1ULL << (nr))
 #endif
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0) && \
-	RHEL_RELEASE_CODE <= RHEL_RELEASE_VERSION(8, 7)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0)
 #define platform_get_ethdev_address(dev, netdev) (-1)
 #endif
 

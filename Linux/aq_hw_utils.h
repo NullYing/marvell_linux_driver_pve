@@ -22,6 +22,7 @@
 #define AQ_HW_SLEEP(_US_) mdelay(_US_)
 
 #define aq_pr_err(...) pr_err(AQ_CFG_DRV_NAME ": " __VA_ARGS__)
+#define aq_pr_debug(...) pr_debug(AQ_CFG_DRV_NAME ": " __VA_ARGS__)
 #define aq_pr_trace(...) pr_info(AQ_CFG_DRV_NAME ": " __VA_ARGS__)
 #define aq_pr_verbose(__aq_nic, __mask, fmt, ...)		\
 do {								\

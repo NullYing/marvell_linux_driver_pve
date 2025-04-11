@@ -1,7 +1,7 @@
 /*
  * File aq_dash.c : Generic Netlink related APIs
  */
-
+#include "aq_hw_utils.h"
 #include "aq_dash_internal.h"
 
 static struct sk_buff *aq_dash_reply_create(void)
@@ -17,7 +17,7 @@ static void *aq_dash_reply_init(struct sk_buff *skb, struct genl_info *info)
 			&aq_dash_nl_family, NLMSG_DONE, info->genlhdr->cmd);
 
 	if (hdr == NULL) {
-		printk(KERN_ERR "Error: Reply message creation failed\n");
+		aq_pr_err("Error: Reply message creation failed\n");
 		nlmsg_free(skb);
 	}
 
@@ -33,7 +33,7 @@ static int aq_dash_reply_add_attr(struct sk_buff *skb,
 		return false;
 
 	if (nla_put(skb, attr, size, data) != 0) {
-		printk(KERN_ERR "Error: failed to put reply attribute\n");
+		aq_pr_err("Error: failed to put reply attribute\n");
 		return false;
 	}
 
@@ -63,13 +63,13 @@ int aq_dash_send_to_user(struct genl_info *info, u8 *requested_data, u16 rpc_siz
 
 	if (aq_dash_reply_add_attr(msg, AQ_DASH_ATTR_MSG_DATA,
 				   rpc_size, requested_data) == false) {
-		printk(KERN_ERR "Failed to add ATTR_MSG_DATA attribute\n");
+		aq_pr_err("Failed to add ATTR_MSG_DATA attribute\n");
 		genlmsg_cancel(msg, hdr);
 		return -EMSGSIZE;
 	}
 
 	if (aq_dash_reply_send(msg, hdr, info) != 0)
-		printk(KERN_ERR "Error: nl_reply_send failed\n");
+		aq_pr_err("Error: nl_reply_send failed\n");
 
 	return 0;
 }
@@ -80,8 +80,7 @@ bool is_atl_device(const struct net_device *dev)
 {
 	static size_t atl_len;
 
-	if (unlikely(atl_len == 0))
-		atl_len = strlen(atl_driver_name);
+	atl_len = strlen(atl_driver_name);
 
 	if (likely(dev && dev->dev.parent)) {
 		const char *driver_name = dev_driver_string(dev->dev.parent);
@@ -100,27 +99,28 @@ bool is_atl_device(const struct net_device *dev)
 static struct net_device *aq_dash_get_dev_by_name(const char *dev_name,
 						struct genl_info *info)
 {
-        struct net_device *netdev = NULL;
+	struct net_device *netdev = NULL;
 
-        if (dev_name == NULL)
-                return NULL;
+	if (dev_name == NULL)
+		return NULL;
 
-        netdev = dev_get_by_name(genl_info_net(info), dev_name);
-        if (unlikely(netdev == NULL)) {
-                printk(KERN_ERR "No matching device found\n");
-                return NULL;
-        }
+	netdev = dev_get_by_name(genl_info_net(info), dev_name);
+	if (unlikely(netdev == NULL)) {
+		aq_pr_err("No matching device found\n");
+		return NULL;
+	}
 
-        if (unlikely(!is_atl_device(netdev))) {
-                printk(KERN_ERR
-                        "Device(%s) is not an ATL device or a wrong driver is used\n", dev_name);
-                goto err_devput;
-        }
-        return netdev;
+	if (unlikely(!is_atl_device(netdev))) {
+		aq_pr_err(
+				"Device(%s) is not an ATL device or a wrong driver is used\n",
+				dev_name);
+		goto err_devput;
+	}
+	return netdev;
 
 err_devput:
-        dev_put(netdev);
-        return NULL;
+	dev_put(netdev);
+	return NULL;
 }
 
 static struct net_device * aq_dash_get_ndev_or_null(struct genl_info *info,
@@ -152,18 +152,25 @@ static int aq_dash_get_data(struct aq_hw_s *self,
 		goto error_exit;
 	}
 
+	mutex_lock(&self->rpc_lock);
 	ret = hw_atl_utils_fw_rpc_wait(self, &prpc);
-	if (ret < 0)
+	if (ret < 0) {
+		mutex_unlock(&self->rpc_lock);
 		goto error_exit;
+	}
 
-	memcpy(&self->rpc, dash_cfg, *size);
-	ret = hw_atl_utils_fw_rpc_call(self, *size);
-	if (ret < 0)
+	ret = hw_atl_utils_fw_data_rpc_call(self, (u32 *)dash_cfg, *size);
+	if (ret < 0) {
+		mutex_unlock(&self->rpc_lock);
 		goto error_exit;
+	}
 
 	ret = hw_atl_utils_fw_rpc_wait(self, &prpc);
-	if (ret < 0)
+	if (ret < 0) {
+		mutex_unlock(&self->rpc_lock);
 		goto error_exit;
+	}
+	mutex_unlock(&self->rpc_lock);
 
 	hdr = (struct aq_dash_rpc_hdr *) kmalloc(sizeof(*hdr), GFP_KERNEL);
 	if (hdr == NULL) {
@@ -214,12 +221,15 @@ static int  aq_dash_send_data(struct aq_hw_s *self,
 		goto err_exit;
 	}
 
+	mutex_lock(&self->rpc_lock);
 	ret = hw_atl_utils_fw_rpc_wait(self, &prpc);
-	if (ret < 0)
+	if (ret < 0) {
+		mutex_unlock(&self->rpc_lock);
 		goto err_exit;
+	}
 
-	memcpy(&self->rpc, dash_cfg, rpc_size);
-	ret = hw_atl_utils_fw_rpc_call(self, rpc_size);
+	ret = hw_atl_utils_fw_data_rpc_call(self, (u32 *)dash_cfg, rpc_size);
+	mutex_unlock(&self->rpc_lock);
 
 err_exit:
 	return ret;
@@ -346,7 +356,7 @@ int aq_dash_process_events(struct aq_nic_s *self)
 	ret = aq_dash_read_events(self->aq_hw, dash_req, (u16 *)&buf_size);
 
 	if (ret < 0) {
-		printk(KERN_ERR "FW: couldn't read DASH request\n");
+		aq_pr_debug("Failed to read DASH request, with error %d\n", ret);
 		goto error_exit;
 	}
 
@@ -355,7 +365,7 @@ int aq_dash_process_events(struct aq_nic_s *self)
 	//Indicate AqDashAgent
 	ret = aq_dash_indicate_agent((u8 *)&dash_event, buf_size + offset);
 	if (ret != 0) {
-		printk(KERN_ERR "FW: failed to send event to AqDashAgent\n");
+		aq_pr_err("Failed to send event to AqDashAgent\n");
 		goto error_exit;
 	}
 
@@ -368,19 +378,19 @@ static int aq_dash_check_fwreq_attributes(struct genl_info *info)
 	int ret = 0;
 
 	if (!info->attrs[AQ_DASH_ATTR_CMD_ID]) {
-		printk(KERN_ERR "Missing FWREQ_CMD_ID attribute\n");
+		aq_pr_err("Missing FWREQ_CMD_ID attribute\n");
 		ret = -EINVAL;
 		goto error_exit;
 	}
 
 	if (!info->attrs[AQ_DASH_ATTR_MSG_DATA]) {
-		printk(KERN_ERR "Missing FWREQ_MSG_DATA attribute\n");
+		aq_pr_err("Missing FWREQ_MSG_DATA attribute\n");
 		ret = -EINVAL;
 		goto error_exit;
 	}
 
 	if (!info->attrs[AQ_DASH_ATTR_MSG_DATA_LEN]) {
-		printk(KERN_ERR "Missing FWREQ_MSG_DATA_LEN attribute\n");
+		aq_pr_err("Missing FWREQ_MSG_DATA_LEN attribute\n");
 		ret = -EINVAL;
 		goto error_exit;
 	}
@@ -419,13 +429,13 @@ static int doit_dash_cfg_fwreq(struct sk_buff *skb, struct genl_info *info)
 	case AQ_DASH_SEND_DATA:
 		ret = aq_dash_send_data(hw, dash_cfg, msg_size);
 		if (ret < 0)
-			printk(KERN_ERR "Failed to configure DASH\n");
+			aq_pr_debug("Failed to send DASH data, with error %d\n", ret);
 
 		break;
 	case AQ_DASH_GET_DATA:
 		ret = aq_dash_get_data(hw, dash_cfg, &msg_size, &resp_ptr);
 		if (ret < 0) {
-			printk(KERN_ERR "Failed to get DASH configurations\n");
+			aq_pr_debug("Failed to get DASH configurations, with error %d\n", ret);
 			break;
 		}
 
@@ -435,7 +445,7 @@ static int doit_dash_cfg_fwreq(struct sk_buff *skb, struct genl_info *info)
 
 		break;
 	default:
-		printk(KERN_ERR "Invalid DASH message ID, %d\n", msg_id);
+		aq_pr_trace("Invalid DASH message ID, %d\n", msg_id);
 		ret = -EINVAL;
 	}
 
@@ -449,7 +459,8 @@ error_exit:
 		RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7, 2)
 static int aq_dash_pre_doit(struct genl_ops *ops, struct sk_buff *skb,
 			      struct genl_info *info)
-#elif (LINUX_VERSION_CODE > KERNEL_VERSION(6, 2, 6))
+#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 2, 0)) || \
+		(RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(9, 2))
 static int aq_dash_pre_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
 			      struct genl_info *info)
 #else
@@ -457,7 +468,6 @@ static int aq_dash_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
 			      struct genl_info *info)
 #endif
 {
-	printk(KERN_INFO "Inside %s function\n", __func__);
 	return 0;
 }
 
@@ -508,7 +518,7 @@ int aq_dash_nl_init(void)
 	ret = genl_register_family(&aq_dash_nl_family);
 
 	if (ret != 0) {
-		printk(KERN_ERR "Netlink registration failed\n");
+		aq_pr_err("Netlink registration failed\n");
 		goto init_failure;
 	}
 
@@ -516,14 +526,14 @@ int aq_dash_nl_init(void)
      RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7, 2)
 	ret = genl_register_ops(&aq_dash_nl_family, aq_dash_nl_ops);
 	if (ret != 0) {
-		printk(KERN_ERR "Netlink ops registration failed\n");
+		aq_pr_err("Netlink ops registration failed\n");
 		genl_unregister_family(&aq_dash_nl_family);
 		goto init_failure;
 	}
 
 	ret = genl_register_mc_group(&aq_dash_nl_family, aq_dash_groups);
 	if (ret != 0) {
-		printk(KERN_ERR "Netlink mc group registration failed\n");
+		aq_pr_err("Netlink mc group registration failed\n");
 		genl_unregister_ops(&aq_dash_nl_family, aq_dash_nl_ops);
 		genl_unregister_family(&aq_dash_nl_family);
 		goto init_failure;
