@@ -1,6 +1,6 @@
 Fixed the Marvell network adapter driver for Proxmox 8.3.
 
-修复了Marvell网卡在PVE上的编译问题，可以直接安装deb或者重新从源码编译，版本是2.5.6
+修复了Marvell网卡在PVE上的编译问题，可以直接安装deb或者重新从源码编译，版本是2.5.12
 
 tested network adapter:
 
