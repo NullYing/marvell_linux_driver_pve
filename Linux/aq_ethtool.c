@@ -954,7 +954,7 @@ static int aq_ethtool_get_ts_info(struct net_device *ndev,
 	return 0;
 }
 
-#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 5)
+#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 12)
 #include <linux/linkmode.h>
 static void eee_mask_to_ethtool_mask(unsigned long *mode, u32 speed)
 {
@@ -985,7 +985,7 @@ static u32 eee_mask_to_ethtool_mask(u32 speed)
 }
 #endif
 
-#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 5)
+#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 12)
 static int aq_ethtool_get_eee(struct net_device *ndev, struct ethtool_keee *eee)
 {
 	struct aq_nic_s *aq_nic = netdev_priv(ndev);
@@ -1052,7 +1052,7 @@ static int aq_ethtool_get_eee(struct net_device *ndev, struct ethtool_eee *eee)
 }
 #endif
 
-#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 5)
+#if LINUX_VERSION_CODE > KERNEL_VERSION(6, 8, 12)
 static int aq_ethtool_set_eee(struct net_device *ndev, struct ethtool_keee *eee)
 #else
 static int aq_ethtool_set_eee(struct net_device *ndev, struct ethtool_eee *eee)
